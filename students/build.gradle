@@ -2,12 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.2.2.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
-    id 'com.bmuschko.docker-remote-api' version '6.1.1'
+	id 'com.google.cloud.tools.jib' version '1.8.0'
 }
-
-import com.bmuschko.gradle.docker.tasks.image.Dockerfile
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-
 
 group = 'hr.fer.docker'
 version = '0.0.1-SNAPSHOT'
@@ -46,24 +42,21 @@ springBoot {
     buildInfo()
 }
 
-
-// Docker tasks
-task createDockerfile(type: Dockerfile) {
-	dependsOn bootJar
-  	from 'openjdk:11.0.5-jre-slim' 	
-  	exposePort 8080
-  	
-  	addFile bootJar.outputs.files.singleFile.name, "/opt/app.jar" 
-  	entryPoint "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/opt/app.jar"
-  	
-  	doLast {
-		ant.copy file: bootJar.outputs.files.singleFile, todir: "${destDir.get()}"
+jib {
+	from {
+//    	image = 'openjdk:11.0.5-jre-slim'
+    	image = 'gcr.io/distroless/java:11'
+ 	}
+  
+	to {
+  		image = "${project.name}-jib:${version}"
   	}
+  
+	container {
+  		appRoot = '/opt'
+  		ports = ['8080']
+  		jvmFlags = ['-Djava.security.egd=file:/dev/./urandom']
+  	}  
 }
 
-task buildImage(type: DockerBuildImage) {
-	dependsOn createDockerfile
-    images.add("${project.name}-gradle:${version}")
-}
-
-assemble.dependsOn buildImage
+assemble.dependsOn jibDockerBuild
