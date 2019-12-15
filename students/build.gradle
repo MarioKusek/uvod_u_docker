@@ -67,15 +67,3 @@ task buildImage(type: DockerBuildImage) {
 }
 
 assemble.dependsOn buildImage
-
-task myDebug() {
-  	println "DEBUG"
-  	
-  	//println "${project.name}-gradle:${version}"
-  	println createDockerfile.destDir.get()
-  	
-  	//createDockerfile.destDir.class.methods.each{ v -> println "${v.name} $v"}
-  	//createDockerfile.destDir.properties.each{ key, value -> println "-- $key : $value" }
-}
-
-
