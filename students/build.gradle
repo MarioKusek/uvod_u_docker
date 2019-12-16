@@ -42,6 +42,8 @@ springBoot {
     buildInfo()
 }
 
+bootBuildInfo.mustRunAfter processResources
+
 jib {
 	from {
     	image = 'openjdk:11.0.5-jre-slim'
