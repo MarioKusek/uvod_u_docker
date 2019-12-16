@@ -44,8 +44,7 @@ springBoot {
 
 jib {
 	from {
-//    	image = 'openjdk:11.0.5-jre-slim'
-    	image = 'gcr.io/distroless/java:11'
+    	image = 'openjdk:11.0.5-jre-slim'
  	}
   
 	to {
