@@ -1,5 +1,7 @@
 # Uvod u kontejnere (Docker)
 
+Video materijali uz ovaj repozitorij se nalaze [ovdje](https://www.youtube.com/playlist?list=PLy0T81VDh93awNP1X91-WPNgOykME_2CI).
+
 ## Osnovne naredbe za korištenje Dockera
 
 ```sh
