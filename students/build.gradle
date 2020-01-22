@@ -65,6 +65,8 @@ jib {
   		appRoot = '/opt'
   		ports = ['8080']
   		jvmFlags = ['-Djava.security.egd=file:/dev/./urandom']
+  		
+  		creationTime = "USE_CURRENT_TIMESTAMP"
   	}  
 }
 
